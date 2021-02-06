@@ -6,7 +6,7 @@ env.config();
 const app = express();
 
 // Routes
-const userRouter = require("./routes/user.routes");
+const authRoutes = require("./routes/auth.routes");
 
 // App setup
 mongoose.connect(process.env.MONGODB_URI, {
@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 app.use(express.json());
 app.use(bodyParser());
-app.use('/api', userRouter);
+app.use('/api', authRoutes);
 
 
 
