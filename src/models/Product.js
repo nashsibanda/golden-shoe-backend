@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 const ProductStyle = require("./ProductStyle");
 
 const productSchema = new mongoose.Schema(

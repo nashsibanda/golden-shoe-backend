@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 
 function getPrice(value) {
   if (typeof value !== 'undefined') {

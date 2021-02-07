@@ -58,7 +58,7 @@ router.post(
   requireAdmin,
   validateProduct,
   isRequestValidated,
-  upload.array("productImage"),
+  upload.none(),
   createProduct
 );
 
