@@ -1,4 +1,4 @@
-const { check, validationResult } = require("express-validator");
+const { check } = require("express-validator");
 
 exports.validateSignup = [
   check("firstName").notEmpty().withMessage("First name is required"),
@@ -15,11 +15,3 @@ exports.validateLogin = [
     .notEmpty()
     .withMessage("Password is required"),
 ];
-
-exports.isRequestValidated = (req, res, next) => {
-  const errors = validationResult(req);
-  if (errors.array().length > 0) {
-    return res.status(400).json({ errors: errors.array().map(err => err.msg) });
-  }
-  next();
-};
