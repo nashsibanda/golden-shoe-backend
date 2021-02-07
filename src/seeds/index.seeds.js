@@ -8,7 +8,7 @@ const Product = require("../models/Product");
 const ProductStyle = require("../models/ProductStyle");
 const StockUnit = require("../models/StockUnit");
 
-const globalAmount = 2;
+const globalAmount = 10;
 
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -41,7 +41,7 @@ mongoose
       "601f3935bb20b28548865542",
       "601f393bbb20b28548865543",
     ];
-    for (let i = 0; i < globalAmount; i++) {
+    for (let i = 0; i < globalAmount * 3; i++) {
       const productName = faker.commerce.productName();
       const imgFields = [];
       for (let j = 0; j < faker.random.number(4) + 1; j++) {
