@@ -23,8 +23,27 @@ exports.createCategory = (req, res) => {
     });
 };
 
+const arrangeCategories = (categories, parent = undefined) => {
+  const arrangedCategories = [];
+  categories.forEach(category => {
+    if (String(category.parentId) === String(parent)) {
+      arrangedCategories.push(category);
+    }
+  });
+  return arrangedCategories.map(category => {
+    const { _id, name, slug } = category
+    return {
+      _id, name, slug,
+      children: arrangeCategories(categories, _id),
+    };
+  });
+};
+
 exports.getCategories = (req, res) => {
   Category.find()
-    .then(categories => res.json(categories))
+    .then(categories => {
+      const output = arrangeCategories(categories)
+      res.json( output )
+  })
     .catch(error => res.status(400).json(error));
 };
