@@ -47,3 +47,11 @@ exports.getCategories = (req, res) => {
   })
     .catch(error => res.status(400).json(error));
 };
+
+exports.getCategory = (req, res) => {
+  Category.findById(req.params.id)
+    .then(category => {
+      res.json( category )
+  })
+    .catch(error => res.status(400).json(error));
+};

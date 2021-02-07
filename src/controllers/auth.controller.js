@@ -24,10 +24,22 @@ exports.signup = (req, res) => {
           message: "Something went wrong!",
         });
       }
-
-      return res.status(201).json({
-        user,
+      const {_id, role} = user;
+      jwt.sign({ _id, role }, process.env.JWT_SECRET, {
+        expiresIn: "1d",
+      }, (err, token) => {
+        if (err) {
+          console.log(err);
+          return res.status(400).json({
+            message: "Something went wrong!",
+          });
+        }
+        return res.status(201).json({
+          success: true,
+          token: "Bearer " + token
+        });
       });
+
     });
   });
 };

@@ -12,6 +12,14 @@ exports.getProducts = (req, res) => {
     .catch(error => res.status(400).json(error));
 };
 
+exports.getRandomProducts = (req, res) => {
+  Product.aggregate([{ $sample: { size: 5 } }])
+    .then(products => {
+      res.json(products);
+    })
+    .catch(error => res.status(400).json(error));
+};
+
 exports.getProduct = (req, res) => {
   Product.findById(req.params.id)
     .then(product => {
@@ -104,7 +112,7 @@ exports.addUnit = (req, res) => {
       size: sizeUnit,
       gender,
     },
-    price
+    price,
   });
   console.log(newSize);
 

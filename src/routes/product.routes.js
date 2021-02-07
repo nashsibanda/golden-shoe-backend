@@ -5,6 +5,7 @@ const router = express.Router();
 const {
   createProduct,
   getProducts,
+  getRandomProducts,
   getProduct,
   addStyle,
   addUnit,
@@ -30,6 +31,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.get("/", getProducts);
+router.get("/random", getRandomProducts)
 router.get("/:id", getProduct);
 router.get("/:id/styles", getProductStyles);
 router.get("/:id/stock", getProductStock);
