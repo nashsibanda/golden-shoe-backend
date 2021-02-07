@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const { validationResult } = require("express-validator");
 
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec((error, existingUser) => {
@@ -34,19 +35,19 @@ exports.signup = (req, res) => {
 
 exports.login = (roleLevel = "user") => (req, res) => {
   User.findOne({ email: req.body.email })
-    .then(foundUser => {
+    .then(async (foundUser) => {
       if (!foundUser) {
         return res.status(400).json({ message: "Invalid login credentials" });
       }
-
-      if (foundUser.authenticate(req.body.password)) {
+      const authenticated = await foundUser.authenticate(req.body.password);
+      if (authenticated) {
         if (roleLevel === "admin" && foundUser.role != "admin") {
           return res.status(401).json({
             message: "This user is not authorized to administer this site",
           });
         }
 
-        const { email, firstName, lastName, role, _id, fullName } = foundUser;
+        const { email, firstName, lastName, role, _id, fullName, password } = foundUser;
         const token = jwt.sign({ _id }, process.env.JWT_SECRET, {
           expiresIn: "1d",
         });
@@ -59,7 +60,7 @@ exports.login = (roleLevel = "user") => (req, res) => {
             firstName,
             lastName,
             role,
-            fullName,
+            fullName, password
           },
         });
       } else {
@@ -70,11 +71,4 @@ exports.login = (roleLevel = "user") => (req, res) => {
       console.log(error);
       return res.status(400).json(error);
     });
-};
-
-exports.requireAuth = (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1];
-  const userId = jwt.verify(token, process.env.JWT_SECRET);
-  req.user = userId;
-  next();
 };
