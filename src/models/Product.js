@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const ProductStyle = require("./ProductStyle");
 
 const productSchema = new mongoose.Schema(
   {
@@ -48,19 +49,23 @@ const productSchema = new mongoose.Schema(
         ref: "Category",
       },
     ],
-    styles: [
-      {
-        style: { type: String, required: true, trim: true },
-        slug: { type: String, trim: true, required: true },
-        images: [{ url: String }],
-      },
-    ],
-    sizes: [
-      {
-        size: { type: String, required: true, trim: true },
-        slug: { type: String, trim: true, required: true },
-      },
-    ],
+    // styles: [
+    //   {
+    //     style: { type: String, required: true, trim: true },
+    //     slug: { type: String, trim: true, required: true },
+    //     images: [{ url: String }],
+    //   },
+    // ],
+    // sizes: [
+    //   {
+    //     size: { type: String, required: true, trim: true },
+    //     slug: { type: String, trim: true, required: true },
+    //   },
+    // ],
+    type: {
+      type: String,
+      required: true,
+    }
   },
   {
     timestamps: true,
