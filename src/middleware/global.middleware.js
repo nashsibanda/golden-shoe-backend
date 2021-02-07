@@ -21,7 +21,8 @@ exports.isRequestValidated = (req, res, next) => {
 };
 
 exports.requireAdmin = (req, res, next) => {
-  if (req.user.role !== "admin")
+  if (req.user.role !== "admin") {
     return res.status(401).json({ message: "Access denied" });
+  }
   next();
 };

@@ -47,7 +47,7 @@ exports.login = (roleLevel = "user") => (req, res) => {
         }
 
         const { email, firstName, lastName, role, _id, fullName, password } = foundUser;
-        const token = jwt.sign({ _id }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ _id, role }, process.env.JWT_SECRET, {
           expiresIn: "1d",
         });
 

@@ -1,28 +1,27 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const categorySchema = new mongoose.Schema(
+const productStyleSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
-      trim: true,
-      index: true,
     },
     slug: {
       type: String,
       required: true,
       trim: true,
-      unique: true
     },
-    parentId: {
+    productId: {
       type: mongoose.Types.ObjectId,
-      ref: 'Category'
-    }
+      ref: "Product",
+      required: true,
+    },
+    images: [{ url: String }],
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model("Category", categorySchema);
+module.exports = mongoose.model("ProductStyle", productStyleSchema);
