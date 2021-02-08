@@ -1,6 +1,12 @@
 const Cart = require("../models/Cart");
 const StockUnit = require("../models/StockUnit");
 
+exports.getStock = (req, res) => {
+  StockUnit.find()
+    .then(stock => res.json(stock))
+    .catch(err => res.error(err));
+};
+
 exports.getStockUnit = (req, res) => {
   StockUnit.findById(req.params.id)
     .then(stockUnit => res.json(stockUnit))

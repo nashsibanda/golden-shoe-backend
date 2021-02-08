@@ -39,11 +39,19 @@ const arrangeCategories = (categories, parent = undefined) => {
   });
 };
 
-exports.getCategories = (req, res) => {
+exports.getArrangedCategories = (req, res) => {
   Category.find()
     .then(categories => {
       const output = arrangeCategories(categories)
       res.json( output )
+  })
+    .catch(error => res.status(400).json(error));
+};
+
+exports.getCategories = (req, res) => {
+  Category.find()
+    .then(categories => {
+      res.json( categories )
   })
     .catch(error => res.status(400).json(error));
 };
